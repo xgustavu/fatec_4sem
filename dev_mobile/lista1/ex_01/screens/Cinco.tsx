@@ -1,26 +1,44 @@
 import React from "react";
-import { View, StyleSheet, Image } from "react-native";
+import { View, StyleSheet, Image, TouchableOpacity, Alert } from "react-native";
 import Constants from 'expo-constants';
 import logo from "../assets/adaptive-icon.png";
 
 export default function Dois() {
+
+    const createButtonAlert = () =>
+        Alert.alert('Boa noite!', '', [
+            {
+              text: 'Ok',
+              onPress: () => console.log('Cancel Pressed'),
+              style: 'cancel',
+            },
+          ]);
+
     return(
         <View style={styles.container}>
             <View style={styles.cima}>
                 <View style={styles.um} >
-                    <Image source={logo} style={styles.imagem}/>
+                    <TouchableOpacity style={styles.btn} onPress={createButtonAlert}>
+                        <Image source={logo} style={styles.imagem}/>
+                    </TouchableOpacity>
                 </View>
                 <View style={styles.dois}>
                     <View style={styles.tres}>
-                        <Image source={logo} style={styles.imagem}/>
+                        <TouchableOpacity style={styles.btn} onPress={createButtonAlert}>
+                            <Image source={logo} style={styles.imagem}/>
+                        </TouchableOpacity>
                     </View>
                     <View style={styles.quatro}>
-                        <Image source={logo} style={styles.imagem}/>
+                        <TouchableOpacity style={styles.btn} onPress={createButtonAlert}>
+                            <Image source={logo} style={styles.imagem}/>
+                        </TouchableOpacity>
                     </View>
                 </View>
             </View>
             <View style={styles.baixo}>
-                <Image source={logo} style={styles.imagem}/>
+                <TouchableOpacity style={styles.btn} onPress={createButtonAlert}>
+                    <Image source={logo} style={styles.imagem}/>
+                </TouchableOpacity>
             </View>
         </View>
     );
@@ -64,5 +82,11 @@ const styles = StyleSheet.create({
         flex: 1,
         resizeMode: "contain",
         alignSelf: "center",
-    }
+        width: 64,
+        height: 64,
+    },
+    btn: {
+        flex: 1,
+        
+    },
 })
