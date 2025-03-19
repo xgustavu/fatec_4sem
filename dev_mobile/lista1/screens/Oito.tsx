@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Picker } from "@react-native-picker/picker";
 import { View, StyleSheet, Image, TouchableOpacity, Alert, StatusBar, Text, TextInput, Button, Keyboard } from "react-native";
 import Constants from 'expo-constants';
 
@@ -7,15 +6,14 @@ export default function Dois() {
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState(""); 
     const [confSenha, setConfSenha] = useState(""); 
-    const [role, setRole] = useState("Usuário");
-    const [dadosSalvos, setDadosSalvos] = useState<{ email: string; senha: string, confSenha: string, role: string } | null>(null);
+    const [dadosSalvos, setDadosSalvos] = useState<{ email: string; senha: string, confSenha: string } | null>(null);
 
     const handleSalvar = () => {
         if (email.trim() === "" || senha.trim() === "") {
             alert("Preencha todos os campos!");
             return;
         }
-        setDadosSalvos({ email, senha, confSenha, role }); 
+        setDadosSalvos({ email, senha, confSenha }); 
         Keyboard.dismiss();
     };
 
@@ -62,18 +60,6 @@ export default function Dois() {
                     />
                 </View>
 
-                <View style={styles.container_input}>
-                    <Text style={styles.texto}>Confirmar Senha</Text>
-                    <Picker
-                        selectedValue={role}
-                        onValueChange={(itemValue) => setRole(itemValue)}
-                    >
-                        <Picker.Item label="Administrador" value="Administrador"/>
-                        <Picker.Item label="Gestor"value="Gestor"/>
-                        <Picker.Item label="Usuário"value="Usuário"/>
-                    </Picker>
-                </View>
-
                 <View style={styles.container_buttons}>
                     <TouchableOpacity style={styles.button} onPress={handleSalvar}>
                         <Text style={styles.texto}>Logar</Text>
@@ -88,7 +74,6 @@ export default function Dois() {
                         <Text style={styles.resultadoTexto}>Nome: {dadosSalvos.email}</Text>
                         <Text style={styles.resultadoTexto}>Senha: {dadosSalvos.senha}</Text>
                         <Text style={styles.resultadoTexto}>Confirmação Senha: {dadosSalvos.confSenha}</Text>
-                        <Text style={styles.resultadoTexto}>Role: {dadosSalvos.role}</Text>
                     </View>
                 )}
             </View>
@@ -100,7 +85,7 @@ export default function Dois() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        paddingTop: Constants.statusBarHeight,
+        // paddingTop: Constants.statusBarHeight,
         width: "100%",
         backgroundColor: "grey",
         justifyContent: "center",

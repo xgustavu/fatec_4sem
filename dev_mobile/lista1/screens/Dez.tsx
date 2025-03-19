@@ -1,19 +1,23 @@
 import React, { useState } from "react";
-import { View, StyleSheet, Image, TouchableOpacity, Alert, StatusBar, Text, TextInput, Button, Keyboard } from "react-native";
+import { Picker } from "@react-native-picker/picker";
+import { View, StyleSheet, Image, TouchableOpacity, Alert, StatusBar, Text, TextInput, Button, Keyboard, Switch } from "react-native";
 import Constants from 'expo-constants';
 
 export default function Dois() {
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState(""); 
     const [confSenha, setConfSenha] = useState(""); 
-    const [dadosSalvos, setDadosSalvos] = useState<{ email: string; senha: string, confSenha: string } | null>(null);
+    const [role, setRole] = useState("Usuário");
+    const [dadosSalvos, setDadosSalvos] = useState<{ email: string; senha: string, confSenha: string, role: string } | null>(null);
+    const [isEnabled, setIsEnabled] = useState(false);
+    const toogleSwitch = () => setIsEnabled(previousState => !previousState)
 
     const handleSalvar = () => {
         if (email.trim() === "" || senha.trim() === "") {
             alert("Preencha todos os campos!");
             return;
         }
-        setDadosSalvos({ email, senha, confSenha }); 
+        setDadosSalvos({ email, senha, confSenha, role }); 
         Keyboard.dismiss();
     };
 
@@ -60,6 +64,29 @@ export default function Dois() {
                     />
                 </View>
 
+                <View style={styles.container_input}>
+                    <Text style={styles.texto}>Confirmar Senha</Text>
+                    <Picker
+                        selectedValue={role}
+                        onValueChange={(itemValue) => setRole(itemValue)}
+                    >
+                        <Picker.Item label="Administrador" value="Administrador"/>
+                        <Picker.Item label="Gestor"value="Gestor"/>
+                        <Picker.Item label="Usuário"value="Usuário"/>
+                    </Picker>
+                </View>
+
+                <View style={styles.container_switch}>
+                    <Text>Manter-se conectado</Text>
+                    <Switch
+                        trackColor={{ false: "#e77878", true:"#94df83" }}
+                        ios_backgroundColor={"#e77878"}
+                        thumbColor={isEnabled ? "#4CAF50" : "#f4f3f4"} // Cor do botão
+                        value={isEnabled} // Define o estado do Switch
+                        onValueChange={toogleSwitch} // Alterna entre ligado/desligado
+                    />
+                </View>
+
                 <View style={styles.container_buttons}>
                     <TouchableOpacity style={styles.button} onPress={handleSalvar}>
                         <Text style={styles.texto}>Logar</Text>
@@ -74,6 +101,7 @@ export default function Dois() {
                         <Text style={styles.resultadoTexto}>Nome: {dadosSalvos.email}</Text>
                         <Text style={styles.resultadoTexto}>Senha: {dadosSalvos.senha}</Text>
                         <Text style={styles.resultadoTexto}>Confirmação Senha: {dadosSalvos.confSenha}</Text>
+                        <Text style={styles.resultadoTexto}>Role: {dadosSalvos.role}</Text>
                     </View>
                 )}
             </View>
@@ -149,5 +177,12 @@ const styles = StyleSheet.create({
         width: 270,
         justifyContent: "center",
         alignItems: "center"
+    },
+    container_switch: {
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "center",
+        alignItems: "center",
+        width: "100%",
     },
 })

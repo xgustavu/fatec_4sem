@@ -14,7 +14,7 @@ export default function Um() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: Constants.statusBarHeight,
+    // paddingTop: Constants.statusBarHeight,
     width: "100%"
   },
   cima: {

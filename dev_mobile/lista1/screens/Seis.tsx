@@ -56,7 +56,7 @@ export default function Dois() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        paddingTop: Constants.statusBarHeight,
+        // paddingTop: Constants.statusBarHeight,
         width: "100%",
         backgroundColor: "grey",
         justifyContent: "center",
